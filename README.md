@@ -3,32 +3,6 @@
 This guide demonstrates how to containerize a MERN (MongoDB, Express.js, React, Node.js) application using Docker and Docker Compose.
 
 
-## Backend Dockerfile
-
-The Backend Dockerfile contains the following instructions:
-
-- `FROM node:latest`
-  - Defines the most recent official Node.js Docker image as the base image for the backend container.
-
-- `WORKDIR /app`
-  - Sets the working directory within the container to `/app`.
-
-- `COPY ../Server .`
-  - Copies the contents of the `../Server` directory (which should contain the backend code) into the current working directory (`/app`) inside the container.
-
-- `RUN npm install`
-  - Installs all the dependencies specified in the `package.json` file for the backend application.
-
-- `EXPOSE 5000`
-  - Exposes port 3000 inside the container, allowing external access to the backend application.
-
-- `CMD ["npm", "run", "devStart"]`
-  - Specifies the command to be executed when the container starts. In this case, it runs the `devStart` script defined in the `package.json` file, which likely starts the backend application in development mode.
-
-
-To build the Docker image, navigate to the root directory of your backend code and run:
-    
-            docker build -t image_name .
 
 ## Frontend Dockerfile
 
@@ -53,6 +27,34 @@ The Frontend Dockerfile contains the following instructions:
  
 
 To create the docker image, simply open up your terminal and change your present working directory to the root directory of your frontend. Make sure the docker file is in the same directory and run the command
+    
+            docker build -t image_name .
+
+
+## Backend Dockerfile
+
+The Backend Dockerfile contains the following instructions:
+
+- `FROM node:latest`
+  - Defines the most recent official Node.js Docker image as the base image for the backend container.
+
+- `WORKDIR /app`
+  - Sets the working directory within the container to `/app`.
+
+- `COPY ../Server .`
+  - Copies the contents of the `../Server` directory (which should contain the backend code) into the current working directory (`/app`) inside the container.
+
+- `RUN npm install`
+  - Installs all the dependencies specified in the `package.json` file for the backend application.
+
+- `EXPOSE 5000`
+  - Exposes port 3000 inside the container, allowing external access to the backend application.
+
+- `CMD ["npm", "run", "devStart"]`
+  - Specifies the command to be executed when the container starts. In this case, it runs the `devStart` script defined in the `package.json` file, which likely starts the backend application in development mode.
+
+
+To build the Docker image, navigate to the root directory of your backend code and run:
     
             docker build -t image_name .
 
