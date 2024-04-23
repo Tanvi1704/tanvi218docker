@@ -1,4 +1,4 @@
-# Containerizing a MERN application
+# Insta Clone a MERN application
 
 This guide demonstrates how to containerize a MERN (MongoDB, Express.js, React, Node.js) application using Docker and Docker Compose.
 
