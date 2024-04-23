@@ -1,6 +1,6 @@
 # Containerizing a MERN application
 
-This repository contains the Dockerfiles, .dockerignore file, and docker-compose.yml file for a full-stack application with a React frontend and a Node.js backend connected to a MongoDB database.
+This guide demonstrates how to containerize a MERN (MongoDB, Express.js, React, Node.js) application using Docker and Docker Compose.
 
 
 ## Backend Dockerfile
@@ -8,7 +8,7 @@ This repository contains the Dockerfiles, .dockerignore file, and docker-compose
 The Backend Dockerfile contains the following instructions:
 
 - `FROM node:latest`
-  - Specifies the base image for the backend container as the latest version of the official Node.js Docker image.
+  - Defines the most recent official Node.js Docker image as the base image for the backend container.
 
 - `WORKDIR /app`
   - Sets the working directory within the container to `/app`.
@@ -19,14 +19,14 @@ The Backend Dockerfile contains the following instructions:
 - `RUN npm install`
   - Installs all the dependencies specified in the `package.json` file for the backend application.
 
-- `EXPOSE 3001`
-  - Exposes port 3001 inside the container, allowing external access to the backend application.
+- `EXPOSE 5000`
+  - Exposes port 3000 inside the container, allowing external access to the backend application.
 
 - `CMD ["npm", "run", "devStart"]`
   - Specifies the command to be executed when the container starts. In this case, it runs the `devStart` script defined in the `package.json` file, which likely starts the backend application in development mode.
 
 
-To create the docker image, simply open up your terminal and change your present working directory to the root directory of your backend. Make sure the docker file is in the same directory and run the command
+To build the Docker image, navigate to the root directory of your backend code and run:
     
             docker build -t image_name .
 
@@ -46,11 +46,10 @@ The Frontend Dockerfile contains the following instructions:
 - `RUN npm install`
   - Installs all the dependencies specified in the `package.json` file for the frontend application.
 
-- `EXPOSE 3000`
-  - Exposes port 3000 inside the container, allowing external access to the frontend application.
+- `EXPOSE 5000`
+  - Exposes port 5000 inside the container, allowing external access to the frontend application.
 
 - `CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]`
-  - Specifies the command to be executed when the container starts. In this case, it runs the `dev` script defined in the `package.json` file, which likely starts the frontend application in development mode. The `--host 0.0.0.0` option allows the frontend to be accessible from outside the container.
  
 
 To create the docker image, simply open up your terminal and change your present working directory to the root directory of your frontend. Make sure the docker file is in the same directory and run the command
@@ -59,7 +58,7 @@ To create the docker image, simply open up your terminal and change your present
 
 ## .dockerignore
 
-The `.dockerignore` file specifies files and directories that should be ignored by Docker when building the image. This can help reduce the image size and improve build times by excluding unnecessary files. In this case, the following items are ignored:
+The .dockerignore file specifies files and directories that should be ignored by Docker when building the image:
 
 - `README.md`: The project's README file.
 - `build` and `dist`: Directories that may contain compiled or built artifacts.
@@ -72,19 +71,19 @@ The `.dockerignore` file specifies files and directories that should be ignored 
 
 ## docker-compose.yml
 
-The `docker-compose.yml` file is used to define and configure multi-container Docker applications. Make sure to create it in the root directory of your project. It contains the following services:
+The `docker-compose.yml` file is used to define and configure multi-container Docker applications:
 
 - `frontend`
-  - `image: rahilg24/21bcp239-frontend`
+  - `image: tanviagrawal1704/21bcp218-front`
     - Specifies the Docker image to be used for the frontend container. Change it to whatever name you have given
   - `ports`
     - Maps the host port (`3000`) to the container port (`3000`), allowing access to the frontend application from outside the container.
 
 - `backend`
-  - `image: rahilg24/21bcp239-backend`
+  - `image: tanviagrawal1704/21bcp218-back`
     - Specifies the Docker image to be used for the backend container. Change it to whatever name you have given
   - `ports`
-    - Maps the host port (`3001`) to the container port (`3001`), allowing access to the backend application from outside the container.
+    - Maps the host port (`5000`) to the container port (`5000`), allowing access to the backend application from outside the container.
   - `depends_on`
     - Specifies that the backend container depends on the `mongodb` service, ensuring that the MongoDB container is started before the backend container.
 
@@ -102,8 +101,6 @@ The `docker-compose.yml` file is used to define and configure multi-container Do
     - `MONGO_INITDB_ROOT_PASSWORD=mongo_pass`: Sets the root password for the MongoDB instance.
 
 By using Docker Compose, you can easily start and manage all the containers required for your application with a single command.
-
-To start this multi-container set your present working directory as the same as that of the docker-compose file and run the following command
     
             docker compose up
 
